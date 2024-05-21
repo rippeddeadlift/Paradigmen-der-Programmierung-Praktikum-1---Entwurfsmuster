@@ -25,10 +25,18 @@ fun main() {
     repeat(100) {
         println("Sinusoidal Sensor ${sinusoidalSensor.getTemperature()}")
     }*/
-    val thermometer = Thermometer(sensor = RealWorldSensor(51.023080, 7.562183))
-    thermometer.measure(1)
-    thermometer.sensor = IncreasingSensor(3.0)
-    thermometer.measure(10)
 
-
+    val sensor = SensorLogger(RoundValues(RandomSensor(10.0, 30.0)))
+    val thermometer = Thermometer(sensor = sensor)
+    val alertObserver = TemperatureAlert(
+        alertTmp = 30.0,
+        alertMsg = " Ganz schön heiß"
+    )
+    val heatingSystemObserver = HeatingSystemObserver(
+        offThreshold = 23.0,
+        onThreshold = 19.0
+    )
+    thermometer.addObserver(alertObserver)
+    thermometer.addObserver(heatingSystemObserver)
+    thermometer.measure(20)
 }
