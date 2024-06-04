@@ -1,9 +1,15 @@
 import kotlin.math.PI
 import kotlin.math.sin
 
-class SinusoidalSensor(private val amplitude: Double, private val frequency: Double, private val phaseShift: Double) : Sensor {
+class SinusoidalSensor(private val amplitude: Double, private val frequency: Double) : Sensor {
+    private var phaseShift = 0.1
+    private var time = 0.0
     override fun getTemperature(): Double {
-        val currentTime = System.currentTimeMillis() / 1000.0 // Zeit in Sekunden
-        return amplitude * sin(2 * PI * frequency * currentTime + phaseShift)
+
+
+        // y(t)=Asin(2πft+ϕ)
+        time += 0.153
+        val y = amplitude * sin(2 * PI * frequency * time + phaseShift)
+        return y
     }
 }

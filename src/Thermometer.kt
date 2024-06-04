@@ -2,7 +2,7 @@ class Thermometer(var sensor: Sensor) : TemperatureSubject {
     fun measure(times: Int) {
         var tmp = 0.0
         repeat(times) {
-            var newTmp = sensor.getTemperature()
+            val newTmp = sensor.getTemperature()
             if (newTmp != tmp) {
                 for (a in observers) {
                     a.update(newTmp)
